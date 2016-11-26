@@ -85,7 +85,7 @@ function GeocodeCallback(data)
 jsMaps.Yandex.prototype.addressGeoSearch = function (search, fun) {
     fn = fun;
     var script = document.createElement('script');
-    script.src = 'http://geocode-maps.yandex.ru/1.x/?geocode=' + search + '&lang=en-US&format=json&callback=GeocodeCallback';
+    script.src = '//geocode-maps.yandex.ru/1.x/?geocode=' + search + '&lang=en-US&format=json&callback=GeocodeCallback';
 
     document.getElementsByTagName('head')[0].appendChild(script);
 };
