@@ -94,6 +94,6 @@ function GeocodeCallbackFactory(fn) {
  */
 jsMaps.Yandex.prototype.addressGeoSearch = function (search, fun) {
     var script = document.createElement('script');
-    script.src = '//geocode-maps.yandex.ru/1.x/?geocode=' + search + '&lang=en-US&format=json&callback=GeocodeCallback';
+    script.src = '//geocode-maps.yandex.ru/1.x/?geocode=' + search + '&lang=en-US&format=json&callback='+GeocodeCallbackFactory(fun);
     document.getElementsByTagName('head')[0].appendChild(script);
 };
