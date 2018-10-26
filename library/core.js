@@ -197,7 +197,6 @@ jsMaps.api = {
         if (typeof parameters != 'undefined') {
             parameters = jsMaps.merge(options,parameters);
         }
-
         var marker = map.parent.marker(map,parameters);
         if (parameters.markerId  == null &&marker.markerId == null) {
             this.markerCounter++;
@@ -205,7 +204,6 @@ jsMaps.api = {
         } else if (parameters.markerId != null && marker.markerId == null) {
             marker.markerId = parameters.markerId;
         }
-
         map.parent.markers.push(marker);
 
         return marker;
@@ -240,8 +238,7 @@ jsMaps.api = {
              * @type jsMaps.MarkerStructure
              */
             var markerItem = object.markers[i];
-
-            if (checkMarkers == true && markerIds.indexOf(markerItem.markerId)) {
+            if (checkMarkers == true && markerIds.indexOf(markerItem.markerId)>=0) {
                 markerItem.remove();
                 delete object.markers[i];
             } else if (checkMarkers == false) {
@@ -262,16 +259,14 @@ jsMaps.api = {
         if (typeof parameters != 'undefined') {
             parameters = jsMaps.merge(new jsMaps.PolyLineOptions(),parameters);
         }
-
         var polyLine = this.object.polyLine(map,parameters);
-
+        if(parameters.polyLineId == "" ) parameters.polyLineId = null;
         if (parameters.polyLineId == null && polyLine.polyLineId == null) {
             this.polyLineIdCounter++;
             polyLine.polyLineId = this.polyLineIdCounter;
         } else if (parameters.polyLineId != null && polyLine.polyLineId == null) {
             polyLine.polyLineId = parameters.polyLineId;
         }
-
         map.parent.polyLines.push(polyLine);
 
         return polyLine;
@@ -289,6 +284,7 @@ jsMaps.api = {
 
         var polygon = this.object.polygon(map,parameters);
 
+        if(parameters.polygonId == "" ) parameters.polygonId = null;
         if (parameters.polygonId == null && polygon.polygonId == null) {
             this.polygonIdCounter++;
             polygon.polygonId = this.polygonIdCounter;
@@ -313,6 +309,7 @@ jsMaps.api = {
 
         var circle = this.object.circle(map,parameters);
 
+        if(parameters.circleId == "" ) parameters.circleId = null;
         if (parameters.circleId == null && circle.circleId == null) {
             this.polygonIdCounter++;
             circle.circleId = this.polygonIdCounter;
@@ -337,7 +334,7 @@ jsMaps.api = {
              */
             var polyLineItem = object.polyLines[i];
 
-            if (checkPolyLine == true && PolyLineIds.indexOf(polyLineItem.polyLineId)) {
+            if (checkPolyLine == true && PolyLineIds.indexOf(polyLineItem.polyLineId)>=0) {
                 polyLineItem.removeLine();
                 delete object.polyLines[i];
             } else if (checkPolyLine == false) {
@@ -350,7 +347,7 @@ jsMaps.api = {
     },
 
     removePolygon: function (map,PolygonIds) {
-        var checkPolyLine = (typeof PolygonIds != 'undefined');
+        var checkPolygon = (typeof PolygonIds != 'undefined');
         var object = map.parent;
 
         for (var i in object.polygons) {
@@ -361,10 +358,10 @@ jsMaps.api = {
              */
             var polygonItem = object.polygons[i];
 
-            if (checkPolyLine == true && PolygonIds.indexOf(polygonItem.polygonId)) {
+            if (checkPolygon == true && PolygonIds.indexOf(polygonItem.polygonId)>=0) {
                 polygonItem.removePolyGon();
                 delete object.polygons[i];
-            } else if (checkPolyLine == false) {
+            } else if (checkPolygon == false) {
                 polygonItem.removePolyGon();
                 delete object.polygons[i];
             }
@@ -372,7 +369,32 @@ jsMaps.api = {
 
         if (object.polygons.length == 0) object.polygons = [];
     },
+    removeCircle : function(map, CircleIds){
+        var checkCircle = (typeof CircleIds != 'undefined');
+        var object = map.parent;
 
+        
+        for (var i in object.polygons) {
+            if (object.polygons.hasOwnProperty(i) == false) continue;
+
+            /**
+             * @type jsMaps.PolygonStructure
+             */
+            var polygonItem = object.polygons[i];
+
+            if (checkCircle == true && CircleIds.indexOf(polygonItem.circleId)>=0) {
+                
+                polygonItem.removeCircle();
+                delete object.polygons[i];
+            } else if (checkCircle == false) {
+                polygonItem.removePolyGon();
+                delete object.polygons[i];
+            }
+        }
+
+        if (object.polygons.length == 0) object.polygons = [];
+        
+    },
     /**
      *
      * @param provider
