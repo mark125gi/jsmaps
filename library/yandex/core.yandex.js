@@ -206,7 +206,7 @@ jsMaps.Yandex.prototype.initializeMap = function (mapDomDocument, options, provi
     hooking.prototype.setCenter = function (lat, lng, transition) {
         ymaps.ready(function () {
             if (transition == 1) {
-                this.object.setCenter([newPixelCenter.lat,newPixelCenter.lng],this.object.getZoom(),{duration: 200});
+                this.object.setCenter([lat, lng],this.object.getZoom(),{duration: 200});
             } else {
                 this.object.setCenter([lat,lng]);
             }
